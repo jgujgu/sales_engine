@@ -11,6 +11,8 @@ require_relative 'customer'
 require_relative 'customer_repository'
 require_relative 'transaction'
 require_relative 'transaction_repository'
+require_relative 'generic_repo'
+require_relative 'container'
 
 class SalesEngine
 

@@ -14,7 +14,7 @@ class GenericRepo
 
 	def all
     @collection.map {|container| container.info}
-	end
+  end
 
 	def random
     @collection[rand(@collection.length)].info

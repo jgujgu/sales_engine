@@ -28,7 +28,7 @@ class ItemRepositoryTest < MiniTest::Test
   end
 
   def test_it_finds_all
-    @item_repo.all
+    assert @item_repo.all
   end
   
   def test_it_finds_one_random
@@ -47,5 +47,9 @@ class ItemRepositoryTest < MiniTest::Test
 
   def test_it_finds_all_by_merchant_id
     assert @item_repo.find_all_by_merchant_id("3")
+  end
+
+  def test_it_returns_empty_array
+    assert_equal [], @item_repo.find_all_by_merchant_id("333")
   end
 end
