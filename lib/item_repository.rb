@@ -2,11 +2,20 @@ require_relative "item"
 require_relative "generic_repo"
 
 class ItemRepository < GenericRepo
-	def find_by_merchant_id(merch_id)
+	def find_one_by_merchant_id(merch_id)
     @collection.select {|item| item.info[:merchant_id] == merch_id}.sample.info
 	end
 
   def find_all_by_merchant_id(merch_id)
     @collection.select {|item| item.info[:merchant_id] == merch_id}.map {|item| item.info}
 	end
+  
+  def find_merchant(merch_id)
+    @calling_object.find_merchant_by_merch_id(merch_id)
+  end
+end
+
+if __FILE__ == $0
+	item_repo = ItemRepository.new("items.csv", Item)
+	puts item_repo.find_all_by_merchant_id("3").count
 end

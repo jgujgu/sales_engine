@@ -1,4 +1,4 @@
-class Container
+class Entry
   attr_accessor :info 
   attr_reader :calling_object
 

@@ -4,16 +4,17 @@ require "csv"
 class GenericRepo
   attr_reader :collection
 
-  def initialize(file, class_name)
+  def initialize(file, class_name, calling_object = nil)
     @collection = self.create_items(file, class_name)
+    @calling_object = calling_object
 	end
   
-  def find_by_id(an_id)
-    @collection.find {|container| container.info[:id] == an_id}.info
+  def find_one_by_id(an_id)
+    @collection.find {|entry| entry.info[:id] == an_id}.info
 	end
 
 	def all
-    @collection.map {|container| container.info}
+    @collection.map {|entry| entry.info}
   end
 
 	def random
