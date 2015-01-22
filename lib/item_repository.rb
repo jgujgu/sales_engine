@@ -9,6 +9,10 @@ class ItemRepository < GenericRepo
   def find_all_by_merchant_id(merch_id)
     @collection.select {|item| item.info[:merchant_id] == merch_id}.map {|item| item.info}
 	end
+
+  def find_invoice_items(item_id)
+    @calling_object.find_invoice_items_by_item_id(item_id)
+  end
   
   def find_merchant(merch_id)
     @calling_object.find_merchant_by_merch_id(merch_id)

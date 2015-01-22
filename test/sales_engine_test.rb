@@ -58,6 +58,11 @@ class SalesEngineTest < MiniTest::Test
     assert_equal Hash, query_2.class
   end
 
+  def test_item_finds_its_invoice_items
+		query = @sales_engine.item_repository.collection[93].invoice_items
+    assert_equal 18, query.count
+  end
+
   def test_item_finds_its_merchant
 		query = @sales_engine.item_repository.collection[93].merchant
     assert_equal Hash, query.class

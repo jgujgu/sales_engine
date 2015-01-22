@@ -55,6 +55,10 @@ class SalesEngine
     @invoice_item_repository.find_all_by_invoice_id(in_id)
   end
 
+  def find_invoice_items_by_item_id(item_id)
+    @invoice_item_repository.find_all_by_item_id(item_id)
+  end
+
   def find_items_by_invoice_id(in_id)
     invoice_items = self.find_invoice_items_by_invoice_id(in_id)
     invoice_items.map {|invoice_item| invoice_item.item}
