@@ -5,7 +5,7 @@ require 'byebug'
 
 class MerchantRepositoryTest < MiniTest::Test
   def setup
-    @merch_repo = MerchantRepository.new("merchants.csv", Merchant)
+    @merch_repo = MerchantRepository.new("./data/merchants.csv", Merchant)
   end
 
   def test_it_exists

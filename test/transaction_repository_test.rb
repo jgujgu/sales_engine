@@ -5,7 +5,7 @@ require 'byebug'
 
 class TransactionRepositoryTest < MiniTest::Test
   def setup
-    @transaction_repo = TransactionRepository.new("transactions.csv", Transaction)
+    @transaction_repo = TransactionRepository.new("./data/transactions.csv", Transaction)
   end
 
   def test_it_exists

@@ -5,7 +5,7 @@ require 'byebug'
 
 class InvoiceRepositoryTest < MiniTest::Test
   def setup
-    @invoice_repo = InvoiceRepository.new("invoices.csv", Invoice)
+    @invoice_repo = InvoiceRepository.new("./data/invoices.csv", Invoice)
   end
 
   def test_it_exists

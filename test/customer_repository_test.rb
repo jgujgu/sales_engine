@@ -5,7 +5,7 @@ require 'byebug'
 
 class CustomerRepositoryTest < MiniTest::Test
   def setup
-    @customer_repo = CustomerRepository.new("customers.csv", Customer)
+    @customer_repo = CustomerRepository.new("./data/customers.csv", Customer)
   end
 
   def test_it_exists

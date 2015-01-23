@@ -4,8 +4,8 @@ require "csv"
 class GenericRepo
   attr_reader :collection
 
-  def initialize(file, class_name, calling_object = nil)
-    @collection = self.create_items(file, class_name)
+  def initialize(file_path, class_name, calling_object = nil)
+    @collection = self.create_items(file_path, class_name)
     @calling_object = calling_object
 	end
   
@@ -21,8 +21,8 @@ class GenericRepo
     @collection[rand(@collection.length)].info
 	end
 
-	def create_items(item_file, class_name)
-		repository_file = CSV.open("./data/#{item_file}", headers: true, header_converters: :symbol)
+	def create_items(file_path, class_name)
+		repository_file = CSV.open("#{file_path}", headers: true, header_converters: :symbol)
 
 		repository_headers = repository_file.readline.headers
 		repository_file.rewind

@@ -5,7 +5,7 @@ require 'byebug'
 
 class ItemRepositoryTest < MiniTest::Test
   def setup
-    @item_repo = ItemRepository.new("items.csv", Item)
+    @item_repo = ItemRepository.new("./data/items.csv", Item)
   end
 
   def test_it_exists

@@ -13,13 +13,16 @@ class SalesEngine
   include SalesSearcher
 	attr_reader :merchant_repository, :invoice_repository, :item_repository, :invoice_repository, :invoice_item_repository, :customer_repository, :transaction_repository
 
+  def initialize(file_path)
+    @file_path = file_path
+  end
 	def startup
-		@merchant_repository  = MerchantRepository.new("merchants.csv", Merchant, self)
-		@invoice_repository = InvoiceRepository.new("invoices.csv", Invoice, self)
-		@item_repository = ItemRepository.new("items.csv", Item, self)
-		@invoice_item_repository = InvoiceItemRepository.new("invoice_items.csv", InvoiceItem, self)
-		@customer_repository = CustomerRepository.new("customers.csv", Customer, self)
-		@transaction_repository = TransactionRepository.new("transactions.csv", Transaction, self)
+		@merchant_repository  = MerchantRepository.new("#{@file_path}merchants.csv", Merchant, self)
+		@invoice_repository = InvoiceRepository.new("#{@file_path}invoices.csv", Invoice, self)
+		@item_repository = ItemRepository.new("#{@file_path}items.csv", Item, self)
+		@invoice_item_repository = InvoiceItemRepository.new("#{@file_path}invoice_items.csv", InvoiceItem, self)
+		@customer_repository = CustomerRepository.new("#{@file_path}customers.csv", Customer, self)
+		@transaction_repository = TransactionRepository.new("#{@file_path}transactions.csv", Transaction, self)
 	end
 
   def find_customers_by_merch_id(merch_id)
@@ -35,7 +38,7 @@ class SalesEngine
         results.any? {|result| result == "success"} ? invoices[index] = 1 : invoices[index] = -1
       end
     end
-    puts invoices_grouped_by_customer
+    invoices_grouped_by_customer
   end
 
   def divide_customers_by_success_fail
