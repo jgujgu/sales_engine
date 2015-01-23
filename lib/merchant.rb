@@ -7,4 +7,8 @@ class Merchant < Entry
 	def invoices
 		@calling_object.find_invoices(@info[:id])
 	end
+
+	def favorite_customer
+    @calling_object.find_favorite_customer(@info[:id])		
+	end
 end
