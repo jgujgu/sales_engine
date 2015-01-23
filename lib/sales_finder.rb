@@ -1,4 +1,4 @@
-module SalesSearcher
+module SalesFinder
   def find_items_by_merch_id(merchant_id)
     @item_repository.find_all_by_merchant_id(merchant_id)
   end

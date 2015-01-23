@@ -15,6 +15,10 @@ class MerchantRepository < GenericRepo
   end
 
   def find_favorite_customer(merchant_id)
-    @calling_object.find_customers_by_merch_id(merchant_id)
+    @calling_object.find_favorite_customer(merchant_id)
+  end
+
+  def find_customers_with_pending_invoices(merchant_id)
+    @calling_object.find_customers_with_pending_invoices(merchant_id)
   end
 end

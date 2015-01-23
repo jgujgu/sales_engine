@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+
 require 'minitest/pride'
 require './lib/sales_engine'
 
@@ -9,15 +10,10 @@ class SalesEngineBITest < MiniTest::Test
 	end
 
   def test_it_finds_transactions_from_merchant
-    query = @sales_engine.merchant_repository.collection[0].favorite_customer
-    puts query
-    puts "\n"
-    min, max = query.minmax_by {|cust_id, successes| successes.inject(:+)}
-    puts min; puts max
-    puts min[0] 
-    puts max[0]
-    puts "\n"
-    puts query.select {|cust_id, successes| successes.include?(-1)}.class
-    #assert_equal Array, query.class
+    query_1 = @sales_engine.merchant_repository.collection[0].favorite_customer
+    query_2 = @sales_engine.merchant_repository.collection[0].customers_with_pending_invoices
+
+    assert_equal "3", query_1
+    assert_equal ["4", "1"], query_2
   end
 end

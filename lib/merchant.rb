@@ -11,4 +11,8 @@ class Merchant < Entry
 	def favorite_customer
     @calling_object.find_favorite_customer(@info[:id])		
 	end
+
+  def customers_with_pending_invoices
+    @calling_object.find_customers_with_pending_invoices(@info[:id])
+  end
 end
