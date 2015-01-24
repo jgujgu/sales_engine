@@ -36,9 +36,9 @@ class ItemRepositoryTest < MiniTest::Test
   end
 
   def test_it_finds_by_id
-    assert_equal "193", @item_repo.find_one_by_id("193")[:id]
-    assert_equal "999", @item_repo.find_one_by_id("999")[:id]
-    assert_equal "242", @item_repo.find_one_by_id("242")[:id]
+    assert_equal "193", @item_repo.find_one_by_id("193").info[:id]
+    assert_equal "999", @item_repo.find_one_by_id("999").info[:id]
+    assert_equal "242", @item_repo.find_one_by_id("242").info[:id]
   end
 
   def test_it_finds_by_merchant_id

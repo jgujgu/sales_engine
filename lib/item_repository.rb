@@ -19,10 +19,16 @@ class ItemRepository < GenericRepo
   end
 
   def most_revenue(num_of_items)
-    @calling_object.find_revenue_by_item(@info[:id])
+    items_in_order = @collection.sort_by do |item|
+      -@calling_object.find_revenue_by_item(item.info[:id], item.info[:merchant_id])
+    end
+    items_in_order[0..(num_of_items - 1)]
   end
 
   def most_items(num_of_items)
-    @calling_object.find_qty_by_item(@info[:id], @info[:merchant_id])
+    items_in_order = @collection.sort_by do |item|
+      -@calling_object.find_qty_by_item(item.info[:id], item.info[:merchant_id])
+    end
+    items_in_order[0..(num_of_items - 1)]
   end
 end

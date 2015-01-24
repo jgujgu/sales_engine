@@ -47,15 +47,15 @@ class SalesEngineTest < MiniTest::Test
 
   def test_transaction_finds_its_invoice
     query = @sales_engine.transaction_repository.collection[456].invoice
-    assert_equal Hash, query.class
+    assert_equal Invoice, query.class
   end
 
   def test_invoice_item_finds_its_invoice_and_item
     query_1 = @sales_engine.invoice_item_repository.collection[17302].invoice
     query_2 = @sales_engine.invoice_item_repository.collection[17302].item
 
-    assert_equal Hash, query_1.class
-    assert_equal Hash, query_2.class
+    assert_equal Invoice, query_1.class
+    assert_equal Item, query_2.class
   end
 
   def test_item_finds_its_invoice_items
@@ -65,7 +65,7 @@ class SalesEngineTest < MiniTest::Test
 
   def test_item_finds_its_merchant
     query = @sales_engine.item_repository.collection[93].merchant
-    assert_equal Hash, query.class
+    assert_equal Merchant, query.class
   end
 
   def test_invoice_finds_its_transaction_and_invoice_items
@@ -80,8 +80,8 @@ class SalesEngineTest < MiniTest::Test
     query_1 = @sales_engine.invoice_repository.collection[3].customer
     query_2 = @sales_engine.invoice_repository.collection[3].merchant
 
-    assert_equal Hash, query_1.class
-    assert_equal Hash, query_2.class
+    assert_equal Customer, query_1.class
+    assert_equal Merchant, query_2.class
   end
 
   def test_invoice_finds_its_transaction_and_invoice_items

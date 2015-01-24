@@ -35,8 +35,8 @@ class CustomerRepositoryTest < MiniTest::Test
   end
 
   def test_it_finds_by_id
-    assert_equal "29", @customer_repo.find_one_by_id("29")[:id]
-    assert_equal "35", @customer_repo.find_one_by_id("35")[:id]
-    assert_equal "76", @customer_repo.find_one_by_id("76")[:id]
+    assert_equal "29", @customer_repo.find_one_by_id("29").info[:id]
+    assert_equal "35", @customer_repo.find_one_by_id("35").info[:id]
+    assert_equal "76", @customer_repo.find_one_by_id("76").info[:id]
   end
 end

@@ -29,6 +29,7 @@ class SalesEngineBITest < MiniTest::Test
     merchants = @sales_engine.merchant_repository.most_revenue(2)
     assert_equal "3", merchants[0].info[:id]
     assert_equal "1", merchants[1].info[:id]
+    refute merchants[2]
   end
 
   def test_it_finds_revenue_by_date_across_merchants
@@ -39,5 +40,20 @@ class SalesEngineBITest < MiniTest::Test
     merchants = @sales_engine.merchant_repository.most_items(2)
     assert_equal "2", merchants[0].info[:id]
     assert_equal "3", merchants[1].info[:id]
+    refute merchants[2]
+  end
+
+  def test_it_finds_top_selling_items_by_qty
+    items = @sales_engine.item_repository.most_items(2)
+    assert_equal "6", items[0].info[:id]
+    assert_equal "5", items[1].info[:id]
+    refute items[2]
+  end
+
+  def test_it_finds_top_grossing_items
+    items = @sales_engine.item_repository.most_revenue(2)
+    assert_equal "5", items[0].info[:id]
+    assert_equal "7", items[1].info[:id]
+    refute items[2]
   end
 end

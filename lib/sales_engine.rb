@@ -90,8 +90,7 @@ class SalesEngine
 
   def add_items_of_successful_invoices(successful_invoices)
     invoice_items = self.find_invoice_items_from_successful_invoices(successful_invoices)
-    item_quantities = invoice_items.map {|invoice_item| invoice_item.info[:quantity].to_i}
-    total_items = item_quantities.reduce(:+)
+    invoice_items.reduce(0) {|sum, invoice_item| sum + invoice_item.info[:quantity].to_i}
   end
 
   def exception_to_handle_missing_invoices(successful_invoices)
@@ -120,12 +119,19 @@ class SalesEngine
     self.add_items_of_successful_invoices(successful_invoices)
   end
 
+  def find_successful_invoice_items_by_merch_id_per_item_id(item_id, merch_id)
+    successful_invoices = self.find_successful_invoices_by_merch_id(merch_id)
+    invoice_items = self.find_invoice_items_from_successful_invoices(successful_invoices)
+    invoice_items.select {|invoice_item| invoice_item.info[:item_id] == item_id}
+  end
+
   def find_revenue_by_item(item_id, merch_id)
-    self.find_merchant_by_merch_id(merch_id)
+    invoice_items_with_item_id = self.find_successful_invoice_items_by_merch_id_per_item_id(item_id, merch_id)
+    invoice_items_with_item_id.reduce(0) {|sum, invoice_item| sum + invoice_item.info[:quantity].to_i * invoice_item.info[:unit_price].to_i}
   end
 
   def find_qty_by_item(item_id, merch_id)
-    merchant = self.find_merchant_by_merch_id(merch_id)
-
+    invoice_items_with_item_id = self.find_successful_invoice_items_by_merch_id_per_item_id(item_id, merch_id)
+    invoice_items_with_item_id.reduce(0) {|sum, invoice_item| sum + invoice_item.info[:quantity].to_i}
   end
 end

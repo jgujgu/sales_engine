@@ -10,15 +10,15 @@ class GenericRepo
   end
 
   def find_one_by_id(an_id)
-    @collection.find {|entry| entry.info[:id] == an_id}.info
+    @collection.find {|entry| entry.info[:id] == an_id}
   end
 
   def all
-    @collection.map {|entry| entry.info}
+    @collection.map {|entry| entry}
   end
 
   def random
-    @collection[rand(@collection.length)].info
+    @collection[rand(@collection.length)]
   end
 
   def create_items(file_path, class_name)
