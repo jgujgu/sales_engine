@@ -1,10 +1,10 @@
 require_relative 'entry'
 class InvoiceItem < Entry
-	def invoice
+  def invoice
     @calling_object.find_invoice(@info[:invoice_id])
-	end
+  end
 
-	def item
+  def item
     @calling_object.find_item(@info[:item_id])
-	end
+  end
 end

@@ -29,12 +29,12 @@ class MerchantRepositoryTest < MiniTest::Test
   def test_it_finds_all
     assert @merch_repo.all
   end
-  
+
   def test_it_finds_one_random
     assert @merch_repo.random
   end
 
-  def test_it_finds_by_id 
+  def test_it_finds_by_id
     assert_equal "29", @merch_repo.find_one_by_id("29")[:id]
     assert_equal "35", @merch_repo.find_one_by_id("35")[:id]
     assert_equal "76", @merch_repo.find_one_by_id("76")[:id]

@@ -29,12 +29,12 @@ class TransactionRepositoryTest < MiniTest::Test
   def test_it_finds_all
     assert @transaction_repo.all
   end
-  
+
   def test_it_finds_one_random
     assert @transaction_repo.random
   end
 
-  def test_it_finds_by_id 
+  def test_it_finds_by_id
     assert_equal "29", @transaction_repo.find_one_by_id("29")[:id]
     assert_equal "35", @transaction_repo.find_one_by_id("35")[:id]
     assert_equal "76", @transaction_repo.find_one_by_id("76")[:id]

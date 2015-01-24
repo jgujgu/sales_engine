@@ -30,12 +30,12 @@ class ItemRepositoryTest < MiniTest::Test
   def test_it_finds_all
     assert @item_repo.all
   end
-  
+
   def test_it_finds_one_random
     assert @item_repo.random
   end
 
-  def test_it_finds_by_id 
+  def test_it_finds_by_id
     assert_equal "193", @item_repo.find_one_by_id("193")[:id]
     assert_equal "999", @item_repo.find_one_by_id("999")[:id]
     assert_equal "242", @item_repo.find_one_by_id("242")[:id]

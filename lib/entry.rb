@@ -1,5 +1,5 @@
 class Entry
-  attr_accessor :info 
+  attr_accessor :info
   attr_reader :calling_object
 
   def initialize(calling_object)

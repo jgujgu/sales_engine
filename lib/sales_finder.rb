@@ -5,8 +5,8 @@ module SalesFinder
 
   def find_invoices_by_merch_id(merchant_id)
     @invoice_repository.find_all_by_merchant_id(merchant_id)
-  end 
-  
+  end
+
   def find_invoices_by_cust_id(cust_id)
     @invoice_repository.find_all_by_customer_id(cust_id)
   end

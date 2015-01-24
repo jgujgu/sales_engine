@@ -2,9 +2,9 @@ require_relative "merchant"
 require_relative "generic_repo"
 
 class MerchantRepository < GenericRepo
-	def find_one_by_name(merch_name)
+  def find_one_by_name(merch_name)
     @collection.find {|merchant| merchant.info[:name] == merch_name}
-	end
+  end
 
   def find_items(merch_id)
     @calling_object.find_items_by_merch_id(merch_id)
@@ -28,5 +28,23 @@ class MerchantRepository < GenericRepo
 
   def find_revenue_by_date_per_merchant(date, merch_id)
     @calling_object.find_revenue_by_date_per_merchant(date, merch_id)
+  end
+
+  def find_item_total(merch_id)
+    @calling_object.find_item_total(merch_id)
+  end
+
+  def most_revenue(num_of_merch)
+    @collection.sort_by {|merchant| -merchant.revenue}[0..(num_of_merch - 1)]
+  end
+
+  def most_items(num_of_merch)
+    @collection.sort_by {|merchant| -merchant.item_total}[0..(num_of_merch - 1)]
+  end
+
+  def revenue(date)
+    revenues = @collection.map {|merchant| (merchant.revenue(date))}
+    revenues.delete(nil)
+    revenues.reduce(:+)
   end
 end
