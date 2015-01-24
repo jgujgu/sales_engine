@@ -23,6 +23,6 @@ class ItemRepository < GenericRepo
   end
 
   def most_items(num_of_items)
-    @calling_object.find_qty_by_item(num_of_items, @info[:id])
+    @calling_object.find_qty_by_item(@info[:id], @info[:merchant_id])
   end
 end

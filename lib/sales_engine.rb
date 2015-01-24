@@ -119,4 +119,13 @@ class SalesEngine
     successful_invoices = self.find_successful_invoices_by_merch_id(merch_id)
     self.add_items_of_successful_invoices(successful_invoices)
   end
+
+  def find_revenue_by_item(item_id, merch_id)
+    self.find_merchant_by_merch_id(merch_id)
+  end
+
+  def find_qty_by_item(item_id, merch_id)
+    merchant = self.find_merchant_by_merch_id(merch_id)
+
+  end
 end
