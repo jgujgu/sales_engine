@@ -18,8 +18,3 @@ class ItemRepository < GenericRepo
     @calling_object.find_merchant_by_merch_id(merch_id)
   end
 end
-
-if __FILE__ == $0
-	item_repo = ItemRepository.new("items.csv", Item)
-	puts item_repo.find_all_by_merchant_id("3").count
-end

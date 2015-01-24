@@ -15,4 +15,8 @@ class Merchant < Entry
   def customers_with_pending_invoices
     @calling_object.find_customers_with_pending_invoices(@info[:id])
   end
+  
+  def revenue
+    @calling_object.find_revenue_per_merchant(@info[:id])
+  end
 end

@@ -1,4 +1,6 @@
 require 'csv'
+require 'bigdecimal'
+require 'bigdecimal/util'
 require_relative 'merchant_repository'
 require_relative 'invoice_repository'
 require_relative 'item_repository'
@@ -59,7 +61,29 @@ class SalesEngine
     invoices.group_by.each_with_index {|invoice, index| invoices[index].info[:customer_id]}
   end
 
-  def divide_customers_by_success_fail
-    #success_fail = partition {|transaction| transaction.result == "success"}
+  def find_successful_invoices_by_merch_id(merch_id)
+    successful_invoices = []
+    invoices_grouped_by_customer = self.group_invoices_by_customer_per_merchant(merch_id)
+    invoices_grouped_by_customer_clone = Marshal.load(Marshal.dump(invoices_grouped_by_customer))
+    successes_and_fails = self.analyze_success_fail_of_customer_by_invoice(invoices_grouped_by_customer)
+    successes_and_fails.each do |cust_id, success_fail|
+      success_fail.each_with_index do |success, index|
+        successful_invoices << invoices_grouped_by_customer_clone [cust_id][index] if success_fail[index] == 1 
+      end
+    end
+    successful_invoices 
+  end
+
+  def add_successful_invoices(successful_invoices)
+    invoice_items = successful_invoices.map {|invoice| self.find_invoice_items_by_invoice_id(invoice.info[:id])}.flatten
+    total_per_item = invoice_items.map {|invoice_item| invoice_item.info[:quantity].to_i * invoice_item.info[:unit_price].to_i}
+    cents_as_string = total_per_item.reduce(:+).to_s
+    dollars = cents_as_string[0..-3] + "." + cents_as_string[-2..-1]
+    BigDecimal.new(dollars)
+  end
+
+  def find_revenue_per_merchant(merch_id)
+    successful_invoices = self.find_successful_invoices_by_merch_id(merch_id)
+    self.add_successful_invoices(successful_invoices)
   end
 end

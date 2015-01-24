@@ -16,4 +16,9 @@ class SalesEngineBITest < MiniTest::Test
     assert_equal "3", query_1
     assert_equal ["4", "1"], query_2
   end
+
+
+  def test_it_finds_revenue_of_merchant
+    assert_equal 0.410536E4, @sales_engine.merchant_repository.collection[0].revenue
+  end
 end
