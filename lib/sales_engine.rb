@@ -1,6 +1,7 @@
 require 'csv'
 require 'bigdecimal'
 require 'bigdecimal/util'
+require 'date'
 require_relative 'merchant_repository'
 require_relative 'invoice_repository'
 require_relative 'item_repository'
@@ -80,6 +81,15 @@ class SalesEngine
     cents_as_string = total_per_item.reduce(:+).to_s
     dollars = cents_as_string[0..-3] + "." + cents_as_string[-2..-1]
     BigDecimal.new(dollars)
+  end
+  
+  def find_revenue_by_date_per_merchant(date, merch_id)
+    successful_invoices = self.find_successful_invoices_by_merch_id(merch_id)
+    successful_invoices_on_date = successful_invoices.select do |invoice|
+      created_date = Date.parse(invoice.info[:created_at])
+      date == created_date.strftime("%F") 
+    end
+    self.add_successful_invoices(successful_invoices_on_date)
   end
 
   def find_revenue_per_merchant(merch_id)

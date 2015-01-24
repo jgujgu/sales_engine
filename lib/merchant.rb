@@ -16,7 +16,9 @@ class Merchant < Entry
     @calling_object.find_customers_with_pending_invoices(@info[:id])
   end
   
-  def revenue
-    @calling_object.find_revenue_per_merchant(@info[:id])
+  def revenue(date = nil)
+    if date then @calling_object.find_revenue_by_date_per_merchant(date, @info[:id])
+    else @calling_object.find_revenue_per_merchant(@info[:id])
+    end
   end
 end

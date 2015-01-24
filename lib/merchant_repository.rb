@@ -25,4 +25,8 @@ class MerchantRepository < GenericRepo
   def find_revenue_per_merchant(merch_id)
     @calling_object.find_revenue_per_merchant(merch_id)
   end
+
+  def find_revenue_by_date_per_merchant(date, merch_id)
+    @calling_object.find_revenue_by_date_per_merchant(date, merch_id)
+  end
 end
