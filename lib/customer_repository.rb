@@ -9,4 +9,8 @@ class CustomerRepository < GenericRepo
   def find_transactions_by_cust_id(cust_id)
     @calling_object.find_transactions_by_cust_id(cust_id)
   end
+
+  def find_favorite_merchant(cust_id)
+    @calling_object.find_favorite_merchant(cust_id)
+  end
 end

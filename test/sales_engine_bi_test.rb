@@ -65,4 +65,9 @@ class SalesEngineBITest < MiniTest::Test
   def test_it_finds_customer_transactions
     assert_equal 9, @sales_engine.customer_repository.collection[2].transactions.flatten.count
   end
+
+  def test_it_finds_the_favorite_merchant
+    merch_id = @sales_engine.customer_repository.collection[2].favorite_merchant
+    assert_equal "3", merch_id
+  end
 end

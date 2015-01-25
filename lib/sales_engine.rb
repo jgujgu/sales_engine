@@ -135,8 +135,7 @@ class SalesEngine
   end
 
   def group_invoices_by_date(invoices)
-    invoices.group_by {|invoice| created_date = Date.parse(invoice.info[:created_at]).strftime("%F")
-}
+    invoices.group_by {|invoice| created_date = Date.parse(invoice.info[:created_at]).strftime("%F")}
   end
 
   def find_best_day(item_id, merch_id)
@@ -155,5 +154,21 @@ class SalesEngine
   def find_transactions_by_cust_id(cust_id)
     cust_invoices = self.find_invoices_by_cust_id(cust_id)
     cust_invoices.map {|invoice| self.find_transactions_by_invoice_id(invoice.info[:id])}.flatten
+  end
+
+  def find_favorite_merchant(cust_id)
+    invoices_in_success_fail_per_merchant = self.show_success_fail_of_merchant_by_invoice_per_merchant(cust_id)
+    min, max = invoices_in_success_fail_per_merchant.minmax_by {|merch_id, successes| successes.inject(:+)}
+    max[0]
+  end
+
+  def group_invoices_by_merchant_per_customer(cust_id)
+    invoices = self.find_invoices_by_cust_id(cust_id)
+    grouped = invoices.group_by.each_with_index {|invoice, index| invoices[index].info[:merchant_id]}
+  end
+
+  def show_success_fail_of_merchant_by_invoice_per_merchant(cust_id)
+    invoices_grouped_by_merchant = self.group_invoices_by_merchant_per_customer(cust_id)
+    self.analyze_success_fail_of_customer_by_invoice(invoices_grouped_by_merchant)
   end
 end
