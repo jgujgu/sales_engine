@@ -151,4 +151,9 @@ class SalesEngine
     end
     successful_invoices_grouped_by_date.max_by {|date, item_totals| item_totals.reduce(:+)}[0]
   end
+
+  def find_transactions_by_cust_id(cust_id)
+    cust_invoices = self.find_invoices_by_cust_id(cust_id)
+    cust_invoices.map {|invoice| self.find_transactions_by_invoice_id(invoice.info[:id])}.flatten
+  end
 end

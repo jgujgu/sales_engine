@@ -61,4 +61,8 @@ class SalesEngineBITest < MiniTest::Test
   def test_it_finds_the_most_popular_day
     assert_equal "2012-03-03", @sales_engine.item_repository.collection[5].best_day
   end
+
+  def test_it_finds_customer_transactions
+    assert_equal 9, @sales_engine.customer_repository.collection[2].transactions.flatten.count
+  end
 end
