@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'bigdecimal/util'
+require 'bigdecimal'
 require 'minitest/pride'
 require './lib/sales_engine'
 
@@ -18,11 +19,11 @@ class SalesEngineBITest < MiniTest::Test
   end
 
   def test_it_finds_revenue_of_merchant
-    assert_equal 0.410536E4, @sales_engine.merchant_repository.collection[0].revenue
+    assert_equal BigDecimal("0.410605E4").to_digits, @sales_engine.merchant_repository.collection[0].revenue.to_digits
   end
 
   def test_it_finds_revenue_of_merchant_by_date
-    assert_equal 0.148056E4, @sales_engine.merchant_repository.collection[0].revenue("2014-12-12")
+    assert_equal BigDecimal("0.148125E4").to_digits, @sales_engine.merchant_repository.collection[0].revenue("2014-12-12").to_digits
   end
 
   def test_it_finds_x_top_merchants_by_revenue
@@ -33,7 +34,7 @@ class SalesEngineBITest < MiniTest::Test
   end
 
   def test_it_finds_revenue_by_date_across_merchants
-    assert_equal 0.1838056E5, @sales_engine.merchant_repository.revenue("2014-12-12")
+    assert_equal BigDecimal("0.1838725E5").to_digits, @sales_engine.merchant_repository.revenue("2014-12-12").to_digits
   end
 
   def test_it_finds_top_selling_merchants_by_product
@@ -55,5 +56,9 @@ class SalesEngineBITest < MiniTest::Test
     assert_equal "5", items[0].info[:id]
     assert_equal "7", items[1].info[:id]
     refute items[2]
+  end
+
+  def test_it_finds_the_most_popular_day
+    assert_equal "2012-03-03", @sales_engine.item_repository.collection[5].best_day
   end
 end

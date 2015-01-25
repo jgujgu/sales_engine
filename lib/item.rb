@@ -7,4 +7,8 @@ class Item < Entry
   def merchant
     @calling_object.find_merchant(@info[:merchant_id])
   end
+
+  def best_day
+    @calling_object.find_best_day(@info[:id], @info[:merchant_id])
+  end
 end

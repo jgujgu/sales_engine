@@ -31,4 +31,8 @@ class ItemRepository < GenericRepo
     end
     items_in_order[0..(num_of_items - 1)]
   end
+
+  def find_best_day(item_id, merch_id)
+    @calling_object.find_best_day(item_id, merch_id)
+  end
 end

@@ -1,5 +1,4 @@
 require 'csv'
-
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'date'
@@ -70,7 +69,7 @@ class SalesEngine
     successes_and_fails = self.analyze_success_fail_of_customer_by_invoice(invoices_grouped_by_customer)
     successes_and_fails.each do |cust_id, success_fail|
       success_fail.each_with_index do |success, index|
-        successful_invoices << invoices_grouped_by_customer_clone [cust_id][index] if success_fail[index] == 1
+        successful_invoices << invoices_grouped_by_customer_clone[cust_id][index] if success_fail[index] == 1
       end
     end
     successful_invoices
@@ -133,5 +132,23 @@ class SalesEngine
   def find_qty_by_item(item_id, merch_id)
     invoice_items_with_item_id = self.find_successful_invoice_items_by_merch_id_per_item_id(item_id, merch_id)
     invoice_items_with_item_id.reduce(0) {|sum, invoice_item| sum + invoice_item.info[:quantity].to_i}
+  end
+
+  def group_invoices_by_date(invoices)
+    invoices.group_by {|invoice| created_date = Date.parse(invoice.info[:created_at]).strftime("%F")
+}
+  end
+
+  def find_best_day(item_id, merch_id)
+    successful_invoices = self.find_successful_invoices_by_merch_id(merch_id)
+    successful_invoices_grouped_by_date = self.group_invoices_by_date(successful_invoices)
+    successful_invoices_grouped_by_date.each do |date, invoices|
+      invoices.each_with_index do |invoice, index|
+        invoice_items = find_invoice_items_by_invoice_id(invoice.info[:id])
+        invoice_items_with_item_id = invoice_items.select {|invoice_item| invoice_item.info[:item_id] == item_id}
+        invoices[index] = invoice_items_with_item_id.reduce(0) {|sum, invoice_item| sum + invoice_item.info[:quantity].to_i * invoice_item.info[:unit_price].to_i}
+      end
+    end
+    successful_invoices_grouped_by_date.max_by {|date, item_totals| item_totals.reduce(:+)}[0]
   end
 end
