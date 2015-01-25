@@ -11,59 +11,76 @@ class SalesEngineBITest < MiniTest::Test
   end
 
   def test_it_finds_transactions_from_merchant
-    query_1 = @sales_engine.merchant_repository.collection[0].favorite_customer
-    query_2 = @sales_engine.merchant_repository.collection[0].customers_with_pending_invoices
+    fav_cust = @sales_engine.merchant_repository.collection[0].favorite_customer
+    delinquent_custs = @sales_engine.merchant_repository.collection[0].customers_with_pending_invoices
 
-    assert_equal "3", query_1
-    assert_equal ["4", "1"], query_2
+    assert_equal "3", fav_cust
+    assert_equal ["4", "1"], delinquent_custs
   end
 
   def test_it_finds_revenue_of_merchant
-    assert_equal BigDecimal("0.410605E4").to_digits, @sales_engine.merchant_repository.collection[0].revenue.to_digits
+    revenue_digits = @sales_engine.merchant_repository.collection[0].revenue.to_digits
+    assert_equal BigDecimal("0.410605E4").to_digits, revenue_digits
   end
 
   def test_it_finds_revenue_of_merchant_by_date
-    assert_equal BigDecimal("0.148125E4").to_digits, @sales_engine.merchant_repository.collection[0].revenue("2014-12-12").to_digits
+    revenue_digits_by_date = @sales_engine.merchant_repository.collection[0].revenue("2014-12-12").to_digits
+    assert_equal BigDecimal("0.148125E4").to_digits, revenue_digits_by_date
   end
 
   def test_it_finds_x_top_merchants_by_revenue
-    merchants = @sales_engine.merchant_repository.most_revenue(2)
-    assert_equal "3", merchants[0].info[:id]
-    assert_equal "1", merchants[1].info[:id]
-    refute merchants[2]
+    merchant_1, merchant_2, merchant_3 = @sales_engine.merchant_repository.most_revenue(2)
+    merch_1_id = merchant_1.info[:id]
+    merch_2_id = merchant_2.info[:id]
+
+    assert_equal "3", merch_1_id
+    assert_equal "1", merch_2_id
+    refute merchant_3
   end
 
   def test_it_finds_revenue_by_date_across_merchants
-    assert_equal BigDecimal("0.1838725E5").to_digits, @sales_engine.merchant_repository.revenue("2014-12-12").to_digits
+    revenue_by_date = @sales_engine.merchant_repository.revenue("2014-12-12").to_digits
+    assert_equal BigDecimal("0.1838725E5").to_digits, revenue_by_date
   end
 
   def test_it_finds_top_selling_merchants_by_product
-    merchants = @sales_engine.merchant_repository.most_items(2)
-    assert_equal "2", merchants[0].info[:id]
-    assert_equal "3", merchants[1].info[:id]
-    refute merchants[2]
+    merchant_1, merchant_2, merchant_3 = @sales_engine.merchant_repository.most_items(2)
+    merch_1_id = merchant_1.info[:id]
+    merch_2_id = merchant_2.info[:id]
+
+    assert_equal "2", merch_1_id
+    assert_equal "3", merch_2_id
+    refute merchant_3
   end
 
   def test_it_finds_top_selling_items_by_qty
-    items = @sales_engine.item_repository.most_items(2)
-    assert_equal "6", items[0].info[:id]
-    assert_equal "5", items[1].info[:id]
-    refute items[2]
+    item_1, item_2, item_3 = @sales_engine.item_repository.most_items(2)
+    item_id_1 = item_1.info[:id]
+    item_id_2 = item_2.info[:id]
+
+    assert_equal "6", item_id_1
+    assert_equal "5", item_id_2
+    refute item_3
   end
 
   def test_it_finds_top_grossing_items
-    items = @sales_engine.item_repository.most_revenue(2)
-    assert_equal "5", items[0].info[:id]
-    assert_equal "7", items[1].info[:id]
-    refute items[2]
+    item_1, item_2, item_3 = @sales_engine.item_repository.most_revenue(2)
+    item_id_1 = item_1.info[:id]
+    item_id_2 = item_2.info[:id]
+
+    assert_equal "5", item_id_1
+    assert_equal "7", item_id_2
+    refute item_3
   end
 
   def test_it_finds_the_most_popular_day
-    assert_equal "2012-03-03", @sales_engine.item_repository.collection[5].best_day
+    item_best_day = @sales_engine.item_repository.collection[5].best_day
+    assert_equal "2012-03-03", item_best_day
   end
 
   def test_it_finds_customer_transactions
-    assert_equal 9, @sales_engine.customer_repository.collection[2].transactions.flatten.count
+    num_of_transactions_for_cust = @sales_engine.customer_repository.collection[2].transactions.count
+    assert_equal 9, num_of_transactions_for_cust
   end
 
   def test_it_finds_the_favorite_merchant
