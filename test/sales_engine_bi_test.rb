@@ -3,6 +3,7 @@ require 'bigdecimal/util'
 require 'bigdecimal'
 require 'minitest/pride'
 require './lib/sales_engine'
+require 'byebug'
 
 class SalesEngineBITest < MiniTest::Test
   def setup
