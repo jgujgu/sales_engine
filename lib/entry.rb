@@ -6,4 +6,12 @@ class Entry
     @info = {}
     @calling_object = calling_object
   end
+
+  def current_time
+    Time.parse(DateTime.now.to_s).utc
+  end
+
+  def increment_id
+    (@collection[-1].info[:id].to_i + 1).to_s
+  end
 end

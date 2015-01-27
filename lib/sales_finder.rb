@@ -41,6 +41,6 @@ module SalesFinder
 
   def find_items_by_invoice_id(in_id)
     invoice_items = self.find_invoice_items_by_invoice_id(in_id)
-    invoice_items.map {|invoice_item| invoice_item.item}
+    invoice_items.map(&:item)
   end
 end

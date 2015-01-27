@@ -18,13 +18,12 @@ module SalesIntelligence
   def find_customers_with_pending_invoices(merch_id)
     invoices_in_success_fail_per_customer = self.show_success_fail_of_customer_by_invoice_per_merchant(merch_id)
     customers_with_pending_invoices_hash = invoices_in_success_fail_per_customer.select {|cust_id, successes| successes.include?(-1)}
-    customers_with_pending_invoices_hash.map {|customer, fails| customer}
+    customers_with_pending_invoices_hash.keys
   end
 
   def find_favorite_customer(merch_id)
     invoices_in_success_fail_per_customer = self.show_success_fail_of_customer_by_invoice_per_merchant(merch_id)
-    min, max = invoices_in_success_fail_per_customer.minmax_by {|cust_id, successes| successes.inject(:+)}
-    max[0]
+    invoices_in_success_fail_per_customer.max_by {|cust_id, successes| successes.inject(:+)}[0]
   end
 
   def group_invoices_by_customer_per_merchant(merch_id)
@@ -48,13 +47,12 @@ module SalesIntelligence
   def add_revenue_of_successful_invoices(successful_invoices)
     invoice_items = self.find_invoice_items_from_successful_invoices(successful_invoices)
     total_per_item = invoice_items.map {|invoice_item| invoice_item.info[:quantity].to_i * invoice_item.info[:unit_price].to_i}
-    cents_as_string = total_per_item.reduce(:+).to_s
-    dollars = cents_as_string.insert(-3, ".")
+    dollars = (total_per_item.reduce(:+) / 100.0).to_s # lol
     BigDecimal.new(dollars)
   end
 
   def find_invoice_items_from_successful_invoices(successful_invoices)
-    successful_invoices.map {|invoice| self.find_invoice_items_by_invoice_id(invoice.info[:id])}.flatten
+    successful_invoices.flat_map {|invoice| self.find_invoice_items_by_invoice_id(invoice.info[:id])}
   end
 
   def add_items_of_successful_invoices(successful_invoices)
@@ -123,13 +121,12 @@ module SalesIntelligence
 
   def find_transactions_by_cust_id(cust_id)
     cust_invoices = self.find_invoices_by_cust_id(cust_id)
-    cust_invoices.map {|invoice| self.find_transactions_by_invoice_id(invoice.info[:id])}.flatten
+    cust_invoices.flat_map {|invoice| self.find_transactions_by_invoice_id(invoice.info[:id])}
   end
 
   def find_favorite_merchant(cust_id)
     invoices_in_success_fail_per_merchant = self.show_success_fail_of_merchant_by_invoice_per_merchant(cust_id)
-    min, max = invoices_in_success_fail_per_merchant.minmax_by {|merch_id, successes| successes.inject(:+)}
-    max[0]
+    invoices_in_success_fail_per_merchant.max_by {|merch_id, successes| successes.inject(:+)}[0]
   end
 
   def group_invoices_by_merchant_per_customer(cust_id)

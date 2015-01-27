@@ -22,7 +22,7 @@ class GenericRepo
   end
 
   def create_items(file_path, class_name)
-    repository_file = CSV.open("#{file_path}", headers: true, header_converters: :symbol)
+    repository_file = CSV.open(file_path, headers: true, header_converters: :symbol)
 
     repository_headers = repository_file.readline.headers
     repository_file.rewind
@@ -34,5 +34,9 @@ class GenericRepo
     end
 
     repo_objects
+  end
+
+  def inspect
+    "#<#{self.class} #{@collection.size} rows>"
   end
 end

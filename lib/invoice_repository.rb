@@ -41,24 +41,20 @@ class InvoiceRepository  < GenericRepo
     @calling_object.find_items_by_invoice_id(in_id)
   end
 
-  def create(invoice_hash = {})
-    invoice = Invoice.new(self)
-    invoice.info[:id] = self.increment_invoice_id
-    invoice.info[:customer_id] = invoice_hash[:customer].info[:id]
-   invoice.info[:merchant_id] = invoice_hash[:merchant].info[:id]
-    invoice.info[:status] = invoice_hash[:status]
-    invoice.info[:created_at] = Time.parse(DateTime.now.to_s).utc
-    invoice.info[:updated_at] = Time.parse(DateTime.now.to_s).utc
-    @collection << invoice
-    items = invoice_hash[:items]
-  end
+  #def create(invoice_hash = {})
+    #invoice = Invoice.new(self)
+    #invoice.info[:id] = self.increment_id
+    #invoice.info[:customer_id] = invoice_hash[:customer].info[:id]
+    #invoice.info[:merchant_id] = invoice_hash[:merchant].info[:id]
+    #invoice.info[:status] = invoice_hash[:status]
+    #invoice.info[:created_at] = self.current_time
+    #invoice.info[:updated_at] = self.current_time
+    #@collection << invoice
+    #items = invoice_hash[:items]
+  #end
 
-  def increment_invoice_id
-    (@collection[-1].info[:id].to_i + 1).to_s
-  end
-
-  def create_invoice_items(items)
-    item_ids = items.map {|item| item.info[:id]}
-    ids_with_qty = item_ids.each_with_object(Hash.new(0)) {|item_id, hash| hash[item_id] += 1}
-  end
+  #def create_invoice_items(items)
+    #item_ids = items.map {|item| item.info[:id]}
+    #ids_with_qty = item_ids.each_with_object(Hash.new(0)) {|item_id, hash| hash[item_id] += 1}
+  #end
 end

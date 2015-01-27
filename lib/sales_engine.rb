@@ -23,11 +23,11 @@ class SalesEngine
   end
 
   def startup
-    @merchant_repository  = MerchantRepository.new("#{@file_path}merchants.csv", Merchant, self)
-    @invoice_repository = InvoiceRepository.new("#{@file_path}invoices.csv", Invoice, self)
-    @item_repository = ItemRepository.new("#{@file_path}items.csv", Item, self)
-    @invoice_item_repository = InvoiceItemRepository.new("#{@file_path}invoice_items.csv", InvoiceItem, self)
-    @customer_repository = CustomerRepository.new("#{@file_path}customers.csv", Customer, self)
-    @transaction_repository = TransactionRepository.new("#{@file_path}transactions.csv", Transaction, self)
+    @merchant_repository  = MerchantRepository.new("#{@file_path}/merchants.csv", Merchant, self)
+    @invoice_repository = InvoiceRepository.new("#{@file_path}/invoices.csv", Invoice, self)
+    @item_repository = ItemRepository.new("#{@file_path}/items.csv", Item, self)
+    @invoice_item_repository = InvoiceItemRepository.new("#{@file_path}/invoice_items.csv", InvoiceItem, self)
+    @customer_repository = CustomerRepository.new("#{@file_path}/customers.csv", Customer, self)
+    @transaction_repository = TransactionRepository.new("#{@file_path}/transactions.csv", Transaction, self)
   end
 end
