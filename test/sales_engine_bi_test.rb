@@ -7,7 +7,7 @@ require 'byebug'
 
 class SalesEngineBITest < MiniTest::Test
   def setup
-    @sales_engine = SalesEngine.new('./fake_data/')
+    @sales_engine = SalesEngine.new('./fake_data')
     @sales_engine.startup
   end
 
@@ -85,7 +85,7 @@ class SalesEngineBITest < MiniTest::Test
   end
 
   def test_it_finds_the_favorite_merchant
-    merch_id = @sales_engine.customer_repository.collection[2].favorite_merchant
+    merch_id = @sales_engine.customer_repository.collection[2].favorite_merchant.info[:id]
     assert_equal "3", merch_id
   end
 end

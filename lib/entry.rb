@@ -14,4 +14,12 @@ class Entry
   def increment_id
     (@collection[-1].info[:id].to_i + 1).to_s
   end
+
+  def id
+    @info[:id].to_i
+  end
+
+  def name
+    @info[:name]
+  end
 end

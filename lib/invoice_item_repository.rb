@@ -3,11 +3,19 @@ require_relative "generic_repo"
 
 class InvoiceItemRepository < GenericRepo
   def find_one_by_item_id(it_id)
-    @collection.select {|item| item.info[:item_id] == it_id}.sample
+    @collection.select {|item| item.info[:item_id] == it_id.to_s}.sample
+  end
+
+  def find_by_item_id(it_id)
+    self.find_one_by_item_id(it_id)
   end
 
   def find_all_by_item_id(it_id)
     @collection.select {|item| item.info[:item_id] == it_id}
+  end
+
+  def find_all_by_quantity(quan)
+    @collection.select{|invoice_item| invoice_item.info[:quantity] == quan.to_s}
   end
 
   def find_one_by_invoice_id(in_id)

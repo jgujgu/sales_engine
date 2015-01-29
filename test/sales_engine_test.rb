@@ -4,7 +4,7 @@ require './lib/sales_engine'
 
 class SalesEngineTest < MiniTest::Test
   def setup
-    @sales_engine = SalesEngine.new('./data/')
+    @sales_engine = SalesEngine.new('./data')
     @sales_engine.startup
   end
 
@@ -84,7 +84,7 @@ class SalesEngineTest < MiniTest::Test
     assert_equal Merchant, query_2.class
   end
 
-  def test_invoice_finds_its_transaction_and_invoice_items
+  def test_invoice_finds_its_items
     query = @sales_engine.invoice_repository.collection[3].items
     assert_equal Array, query.class
   end

@@ -126,7 +126,8 @@ module SalesIntelligence
 
   def find_favorite_merchant(cust_id)
     invoices_in_success_fail_per_merchant = self.show_success_fail_of_merchant_by_invoice_per_merchant(cust_id)
-    invoices_in_success_fail_per_merchant.max_by {|merch_id, successes| successes.inject(:+)}[0]
+    merch_id = invoices_in_success_fail_per_merchant.max_by {|merch_id, successes| successes.inject(:+)}[0]
+    @merchant_repository.find_one_by_id(merch_id)
   end
 
   def group_invoices_by_merchant_per_customer(cust_id)

@@ -11,4 +11,12 @@ class Customer < Entry
   def favorite_merchant
     @calling_object.find_favorite_merchant(@info[:id])
   end
+
+  def first_name
+    @info[:first_name]
+  end
+
+  def last_name
+    @info[:last_name]
+  end
 end

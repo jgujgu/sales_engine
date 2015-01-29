@@ -1,5 +1,9 @@
 require_relative 'entry'
 class Item < Entry
+	 def find_one_by_id(an_id)
+    @collection.find {|entry| entry.info[:id] == an_id.to_s}
+  end
+
   def invoice_items
     @calling_object.find_invoice_items(@info[:id])
   end

@@ -7,4 +7,8 @@ class InvoiceItem < Entry
   def item
     @calling_object.find_item(@info[:item_id])
   end
+
+  def item_id
+    @info[:item_id].to_i
+  end
 end

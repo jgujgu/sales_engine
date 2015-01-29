@@ -22,7 +22,7 @@ class InvoiceRepository  < GenericRepo
   end
 
   def find_transactions(in_id)
-    @calling_object.find_transaction_by_invoice_id(in_id)
+    @calling_object.find_transactions_by_invoice_id(in_id)
   end
 
   def find_invoice_items(in_id)
@@ -39,6 +39,14 @@ class InvoiceRepository  < GenericRepo
 
   def find_items(in_id)
     @calling_object.find_items_by_invoice_id(in_id)
+  end
+
+  def find_by_status(stat)
+    @collection.find {|invoice| invoice.info[:status] == stat}
+  end
+
+  def find_all_by_status(stat)
+    @collection.select {|invoice| invoice.info[:status] == stat}
   end
 
   #def create(invoice_hash = {})

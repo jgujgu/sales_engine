@@ -10,7 +10,11 @@ class GenericRepo
   end
 
   def find_one_by_id(an_id)
-    @collection.find {|entry| entry.info[:id] == an_id}
+    @collection.find {|entry| entry.info[:id] == an_id.to_s}
+  end
+
+  def find_by_id(an_id)
+    self.find_one_by_id(an_id)
   end
 
   def all
@@ -38,5 +42,13 @@ class GenericRepo
 
   def inspect
     "#<#{self.class} #{@collection.size} rows>"
+  end
+
+  def find_by_name(query_name)
+    @collection.find {|entry| entry.info[:name] == query_name}
+  end
+
+  def find_all_by_name(query_name)
+    @collection.select {|entry| entry.info[:name] == query_name}
   end
 end

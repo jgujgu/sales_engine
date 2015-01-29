@@ -19,4 +19,8 @@ class Invoice < Entry
   def items
     @calling_object.find_items(@info[:id])
   end
+
+  def customer_id
+    @info[:customer_id].to_i
+  end
 end
